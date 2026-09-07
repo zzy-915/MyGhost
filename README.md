@@ -53,20 +53,7 @@
 
 ### 系统架构图
 
-```mermaid
-graph TD
-    User[访客/会员] --> Theme[自定义 Ghost 主题]
-    Theme --> Search[搜索/收藏扩展模块]
-    Theme --> AdminUI[作者/管理员界面]
-    Search --> ContentAPI[Ghost Content API]
-    AdminUI --> AdminAPI[Ghost Admin API]
-    ContentAPI --> Core[Ghost 内容与会员服务]
-    AdminAPI --> Core
-    Core --> SQLite[(SQLite 内容库)]
-    Core --> Backup[备份/导出 JSON]
-    Backup -->|恢复| SQLite
-    Search -->|收藏数据| LocalStorage[浏览器 localStorage]
-```
+![项目总体架构图](docs/images/architecture.png)
 
 ### 关键目录
 
