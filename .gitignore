@@ -1,0 +1,57 @@
+# Ghost runtime data - NEVER commit database, logs, or secrets
+runtime/content/data/
+runtime/content/logs/
+runtime/content/images/
+runtime/content/media/
+runtime/content/files/
+runtime/content/settings/
+runtime/content/adapters/
+runtime/content/data/
+runtime/.ghost-cli
+runtime/config.development.json
+runtime/config.production.json
+runtime/system/
+
+# Node modules
+node_modules/
+**/node_modules/
+
+# Theme build artifacts
+theme/**/assets/built/
+theme/**/.cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.crt
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+*.tmp
+*.bak
+*.zip
+!theme/*.zip
+
+# Test artifacts
+test-results/
+playwright-report/
