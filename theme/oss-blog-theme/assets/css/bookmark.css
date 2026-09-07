@@ -1,0 +1,284 @@
+/* ============================================
+   OSS Blog Theme - Bookmark / Read-Later Styles
+   ============================================ */
+
+/* ---------- Nav bookmark link ---------- */
+.gh-bookmark-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ghost-accent-color, #15171a);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+}
+
+.gh-bookmark-link:hover {
+    opacity: 0.7;
+}
+
+.gh-bookmark-link svg {
+    width: 18px;
+    height: 18px;
+}
+
+.bookmark-count-badge {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: var(--ghost-accent-color, #15171a);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 9px;
+    line-height: 1;
+}
+
+/* ---------- Post bookmark button ---------- */
+.article-bookmark-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1px solid var(--ghost-accent-color, #15171a);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--ghost-accent-color, #15171a);
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 12px;
+    vertical-align: middle;
+}
+
+.article-bookmark-btn:hover {
+    background: var(--ghost-accent-color, #15171a);
+    color: #fff;
+}
+
+.article-bookmark-btn.is-bookmarked {
+    background: var(--ghost-accent-color, #15171a);
+    color: #fff;
+}
+
+.article-bookmark-btn .bookmark-icon {
+    display: inline-flex;
+    align-items: center;
+}
+
+.article-bookmark-btn .bookmark-label {
+    line-height: 1;
+}
+
+/* Place button next to share */
+.article-byline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.article-byline-content {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* ---------- Bookmarks list page ---------- */
+.bookmarks-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.bookmarks-page-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.bookmarks-page-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin: 0 0 0.8rem;
+    letter-spacing: -0.02em;
+}
+
+.bookmarks-page-subtitle {
+    font-size: 1.6rem;
+    color: #7b8794;
+    margin: 0;
+}
+
+.bookmarks-empty {
+    display: none;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #7b8794;
+}
+
+.bookmarks-empty-icon {
+    font-size: 4.8rem;
+    margin-bottom: 1.6rem;
+    opacity: 0.4;
+}
+
+.bookmarks-empty-text {
+    font-size: 1.8rem;
+    margin: 0 0 0.8rem;
+    color: #3c4858;
+}
+
+.bookmarks-empty-hint {
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+/* ---------- Bookmark card ---------- */
+.bookmark-card {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid #e5e9f0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.bookmark-card:last-child {
+    border-bottom: none;
+}
+
+.bookmark-card-image {
+    flex-shrink: 0;
+    width: 160px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    display: block;
+}
+
+.bookmark-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.bookmark-card-image:hover img {
+    transform: scale(1.05);
+}
+
+.bookmark-card-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.bookmark-card-title {
+    font-size: 1.9rem;
+    font-weight: 600;
+    margin: 0 0 0.6rem;
+    line-height: 1.3;
+}
+
+.bookmark-card-title a {
+    color: #15171a;
+    text-decoration: none;
+}
+
+.bookmark-card-title a:hover {
+    color: var(--ghost-accent-color, #15171a);
+}
+
+.bookmark-card-excerpt {
+    font-size: 1.4rem;
+    color: #5e6f82;
+    line-height: 1.6;
+    margin: 0 0 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.bookmark-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.bookmark-card-date {
+    font-size: 1.3rem;
+    color: #9aa5b1;
+}
+
+.bookmark-remove-btn {
+    padding: 4px 12px;
+    border: 1px solid #e5e9f0;
+    border-radius: 4px;
+    background: transparent;
+    color: #9aa5b1;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.bookmark-remove-btn:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+    background: #fef2f2;
+}
+
+/* ---------- Toast ---------- */
+.bookmark-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #15171a;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 9999;
+}
+
+.bookmark-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+    .bookmark-card {
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    .bookmark-card-image {
+        width: 100%;
+        height: 160px;
+    }
+
+    .bookmarks-page {
+        padding: 2rem 1.6rem;
+    }
+
+    .bookmarks-page-title {
+        font-size: 2.4rem;
+    }
+
+    .article-bookmark-btn {
+        margin-left: 0;
+        margin-top: 8px;
+    }
+}
