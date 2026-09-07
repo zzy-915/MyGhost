@@ -1,4 +1,4 @@
-# 一键停止 Ghost 博客系统
+# 一键停止 Ghost 博客系统（直接结束 node 进程）
 # 用法: .\scripts\stop.ps1
 
 $ErrorActionPreference = "Stop"
@@ -31,23 +31,49 @@ if (-not $portInUse) {
     Write-Host "========================================" -ForegroundColor Cyan
     exit 0
 }
+$procIds = $portInUse.OwningProcess | Select-Object -Unique
 Write-Host "  Ghost 正在运行 (端口 2368)" -ForegroundColor Green
+Write-Host "  进程 PID: $($procIds -join ', ')" -ForegroundColor Green
 Write-Host ""
 
-# 停止 Ghost
-Write-Host "[3/3] 停止 Ghost..." -ForegroundColor Yellow
+# 停止 Ghost（直接结束 node 进程）
+Write-Host "[3/3] 停止 Ghost（结束 node 进程）..." -ForegroundColor Yellow
+foreach ($procId in $procIds) {
+    $proc = Get-Process -Id $procId -ErrorAction SilentlyContinue
+    if ($proc) {
+        Write-Host "  结束进程: PID=$procId, Name=$($proc.ProcessName)" -ForegroundColor Yellow
+        Stop-Process -Id $procId -Force -ErrorAction SilentlyContinue
+    }
+}
+
+# 尝试 ghost stop（如果是通过 ghost-cli 启动的）
 Set-Location $RuntimeDir
-ghost stop
+ghost stop 2>$null | Out-Null
 
 # 确认端口已释放
-Start-Sleep -Seconds 2
-$portStillInUse = Get-NetTCPConnection -LocalPort 2368 -ErrorAction SilentlyContinue
-if ($portStillInUse) {
-    Write-Host "  警告: 端口 2368 仍被占用，尝试强制结束进程..." -ForegroundColor Yellow
-    $procId = $portStillInUse.OwningProcess | Select-Object -Unique
-    Write-Host "  结束进程 PID: $procId" -ForegroundColor Yellow
-    Stop-Process -Id $procId -Force -ErrorAction SilentlyContinue
+Write-Host "  等待端口释放..." -ForegroundColor Yellow
+$portReleased = $false
+for ($i = 0; $i -lt 10; $i++) {
+    Start-Sleep -Seconds 1
+    $portStillInUse = Get-NetTCPConnection -LocalPort 2368 -ErrorAction SilentlyContinue
+    if (-not $portStillInUse) {
+        $portReleased = $true
+        Write-Host "  端口 2368 已释放（耗时 $($i + 1) 秒）" -ForegroundColor Green
+        break
+    }
+}
+
+if (-not $portReleased) {
+    Write-Host "  警告: 端口 2368 仍被占用，强制结束所有相关 node 进程..." -ForegroundColor Yellow
+    Get-Process -Name node -ErrorAction SilentlyContinue | Where-Object { $_.Path -like "*oss-blog*" -or $_.CommandLine -like "*ghost*" } | Stop-Process -Force -ErrorAction SilentlyContinue
     Start-Sleep -Seconds 2
+    $portFinal = Get-NetTCPConnection -LocalPort 2368 -ErrorAction SilentlyContinue
+    if ($portFinal) {
+        Write-Host "  错误: 无法释放端口 2368，请手动结束进程" -ForegroundColor Red
+        Write-Host "  占用进程 PID: $($portFinal.OwningProcess -join ', ')" -ForegroundColor Red
+    } else {
+        Write-Host "  端口 2368 已释放" -ForegroundColor Green
+    }
 }
 
 Write-Host ""
